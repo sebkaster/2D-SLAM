@@ -77,7 +77,14 @@ class robot:
             One item in the returned list should be in the form: [landmark_index, dx, dy].
             '''
            
-        measurements = []
+
+        measurements = list()
+        for index, landmark in enumerate(self.landmarks):
+            noise = self.rand() * self.measurement_noise
+            dx = landmark[0] - self.x + noise
+            dy = landmark[1] - self.y + noise
+            if -self.measurement_range <= (dx and dy) <= self.measurement_range:
+                measurements.append([index, dx, dy])
         
         ## TODO: iterate through all of the landmarks in a world
         
